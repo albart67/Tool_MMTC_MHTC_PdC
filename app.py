@@ -8,7 +8,20 @@ data = {
                '3 x MMTC 20', '3 x MMTC 26', '3 x MMTC 33', '3 x MMTC 40'],
     'débit': [3.68, 4.72, 5.79, 6.98, 3.5, 5.24, 7.36, 9.44, 11.58, 13.96, 11.04, 14.16, 17.37, 20.94],
     'HMT dispo': [6.3, 3.2, 5.5, 2.8, 6.4, 4.4, 6.3, 3.2, 5.5, 2.8, 6.3, 3.2, 5.5, 2.8]
+    
 }
+
+# Définition des rugosités pour différents matériaux
+rugosites = {
+    'Cuivre': 0.0015,
+    'Acier galvanisé': 0.015,
+    'Acier inoxydable': 0.002,
+    'Fonte': 0.26,
+    'PVC': 0.0015,
+    'PEHD': 0.007
+}
+
+
 
 # Fonction Colebrook-White
 def colebrook(f, epsilon, D, Re):
@@ -26,7 +39,7 @@ def calculer_vitesse(Q, D):
     return v
 
 def main():
-    st.title("Calcul des Pertes de Charge Linéiques et Longueur Possible du Tube")
+    st.title("Longueur Possible des conduits MMTC et MHTC")
     
     # Menu déroulant pour choisir le modèle
     modèle = st.selectbox("Choisissez un modèle", data['modèle'])
@@ -34,11 +47,21 @@ def main():
     # Multi-choix pour les diamètres
     diamètre = st.selectbox("Choisissez un diamètre (en mm)", [33, 40, 50, 66, 80])
 
-    coudes = st.selectbox("Nombre de coudes à 90° grand angle", [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    # Menu déroulant pour choisir le matériau
+    matériau = st.selectbox("Choisissez un matériau", list(rugosites.keys()))
     
+    # Obtenir la rugosité pour le matériau sélectionné
+    epsilon = rugosites[matériau] / 1000  # Convertir la rugosité en mètres
+
+    coudes = st.selectbox("Nombre de coudes à 90° grand angle", [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+
+    dzeta_fc = st.number_input("Saisir la somme des dzettas pour filtre + clapet", min_value=0.0, step=0.1)
+    
+    pdc_autre = st.number_input("Saisir une valeurs de PdC supplémentaire (mCE):", min_value=0.0, step=0.1)
+
     # Conversion des unités
     D = diamètre / 1000  # Convertir le diamètre en mètres
-    epsilon = 0.0045 / 1000  # Convertir la rugosité en mètres
+    #epsilon = 0.0045 / 1000  # Convertir la rugosité en mètres
 
     
     # Trouver le débit correspondant au modèle choisi
@@ -70,6 +93,9 @@ def main():
 
     #PdC pour 2Té + 2 VI + 2 Brides
     pdc_T_VI_Br = 4.5*y
+
+    #PdC pour filtre + clapet
+    pdc_fc = y*dzeta_fc
     
     if Re > 2000:
         # Deviner une valeur initiale pour f
@@ -82,7 +108,7 @@ def main():
         perte_par_metre = perte_charge_par_metre(f_solution, D, v)
         
         # Calculer la longueur possible du tube
-        longueur_possible = (HMT_dispo - pdc_coudes - pdc_T_VI_Br) / (perte_par_metre)  # Convertir en mètres
+        longueur_possible = (HMT_dispo - pdc_coudes - pdc_T_VI_Br - pdc_fc - pdc_autre) / (perte_par_metre)  # Convertir en mètres
         
         # Afficher les résultats
         st.write(f"Le coefficient de frottement est: {f_solution:.4f}")
@@ -90,7 +116,7 @@ def main():
         st.write(f"PdC singulières pour: 2 Té + 2 Vannes d'isolement + 2 Brides volume tampon sont: {pdc_T_VI_Br:.3f} mCE")
         st.write(f"PdCe métriques (mCE) sont: {perte_par_metre:.3f} mCE/m")
 
-        st.write(f"La longueur possible du tube est: {longueur_possible:.2f} m")
+        st.write(f"La longueur possible du tube est: {longueur_possible:.2f} mètres")
     else:
         st.write("Le régime d'écoulement est laminaire (Re <= 2000), la formule de Colebrook-White n'est pas applicable.")
 
