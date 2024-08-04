@@ -114,10 +114,10 @@ def main():
         st.write(f"Le coefficient de frottement est: {f_solution:.4f}")
 
         #st.write(f"PdC singulières pour: 2 Té + 2 Vannes d'isolement + 2 Brides volume tampon sont: {pdc_T_VI_Br:.3f} mCE")
-        st.write(f"PdC singulières totales: {pdc_coudes + pdc_T_VI_Br + pdc_fc - pdc_autre} mCE")
+        st.write(f"PdC singulières totales: {pdc_coudes + pdc_T_VI_Br + pdc_fc - pdc_autre:.3f} mCE")
         st.write(f"PdCe métriques (mCE) sont: {perte_par_metre:.3f} mCE/m")
 
-        st.write(f"La longueur possible du tube est: {longueur_possible:.2f} mètres")
+        st.write(f"La longueur possible du tube est: {math.floor(longueur_possible):.0f} mètres")
     else:
         st.write("Le régime d'écoulement est laminaire (Re <= 2000), la formule de Colebrook-White n'est pas applicable.")
 
