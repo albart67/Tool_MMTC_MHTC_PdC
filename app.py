@@ -39,16 +39,16 @@ def calculer_vitesse(Q, D):
     return v
 
 def main():
-    st.title("Longueur Possible des conduits MMTC et MHTC")
+    st.title("Longueur des conduits MMTC et MHTC")
     
     # Menu déroulant pour choisir le modèle
-    modèle = st.selectbox("Choisissez un modèle", data['modèle'])
+    modèle = st.selectbox("Choisissez un modèle de PAC", data['modèle'])
     
     # Multi-choix pour les diamètres
-    diamètre = st.selectbox("Choisissez un diamètre (en mm)", [33, 40, 50, 66, 80])
+    diamètre = st.selectbox("Choisissez un diamètre intérieur de conduit(en mm)", [33, 40, 50, 66, 80])
 
     # Menu déroulant pour choisir le matériau
-    matériau = st.selectbox("Choisissez un matériau", list(rugosites.keys()))
+    matériau = st.selectbox("Choisissez un matériau de conduit", list(rugosites.keys()))
     
     # Obtenir la rugosité pour le matériau sélectionné
     epsilon = rugosites[matériau] / 1000  # Convertir la rugosité en mètres
