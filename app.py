@@ -39,7 +39,7 @@ def calculer_vitesse(Q, D):
     return v
 
 def main():
-    st.title("Longueur des conduits MMTC et MHTC")
+    st.title("Longueur maximale des conduites pour PAC MMTC et MHTC")
     
     # Menu déroulant pour choisir le modèle
     modèle = st.selectbox("Choisissez un modèle de PAC", data['modèle'])
@@ -73,8 +73,16 @@ def main():
     Q = Q_h / 3600  # 1 heure = 3600 secondes
     
     # Calculer la vitesse d'écoulement
+
     v = calculer_vitesse(Q, D)
-    st.write(f"La vitesse d'écoulement est: {v:.2f} m/s")
+    if v > 1.5:
+        st.markdown(f"<div style='background-color: red; padding: 10px;'>La vitesse d'écoulement est de {v:.2f} m/s</div>", unsafe_allow_html=True)
+    else:
+        st.write(f"La vitesse d'écoulement est de {v:.2f} m/s")
+    
+   
+    
+    
 
 
     
@@ -83,7 +91,7 @@ def main():
     
     # Calculer le nombre de Reynolds
     Re = (v * D) / nu
-    st.write(f"Le nombre de Reynolds est: {Re:.0f}")
+    st.write(f"Le nombre de Reynolds est de {Re:.0f}")
 
     #v2/2g
     y = (v**2)/(2*9.81)
@@ -111,13 +119,14 @@ def main():
         longueur_possible = (HMT_dispo - pdc_coudes - pdc_T_VI_Br - pdc_fc - pdc_autre) / (perte_par_metre)  # Convertir en mètres
         
         # Afficher les résultats
-        st.write(f"Le coefficient de frottement est: {f_solution:.4f}")
+        st.write(f"Le coefficient de frottement est de {f_solution:.3f}")
 
         #st.write(f"PdC singulières pour: 2 Té + 2 Vannes d'isolement + 2 Brides volume tampon sont: {pdc_T_VI_Br:.3f} mCE")
-        st.write(f"PdC singulières totales: {pdc_coudes + pdc_T_VI_Br + pdc_fc - pdc_autre:.3f} mCE")
-        st.write(f"PdCe métriques (mCE) sont: {perte_par_metre:.3f} mCE/m")
+        st.write(f"PdC singulières totales sont de {pdc_coudes + pdc_T_VI_Br + pdc_fc - pdc_autre:.3f} mCE")
+        st.write(f"PdCe métriques (mCE) sont de {perte_par_metre:.3f} mCE/m")
 
-        st.write(f"La longueur possible du tube est: {math.floor(longueur_possible):.0f} mètres")
+        #st.write(f"La longueur possible du tube est: {math.floor(longueur_possible):.0f} mètres")
+        st.markdown(f"<div style='border: 3px solid black; font-weight: bold ; padding: 10px;'>La longueur maximale aller-retour de la conduite est de <b> {math.floor(longueur_possible):.0f} mètres </b> </div>", unsafe_allow_html=True)  # Encadrer le résultat
     else:
         st.write("Le régime d'écoulement est laminaire (Re <= 2000), la formule de Colebrook-White n'est pas applicable.")
 
