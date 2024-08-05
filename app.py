@@ -122,8 +122,8 @@ def main():
         st.write(f"Le coefficient de frottement est de {f_solution:.3f}")
 
         #st.write(f"PdC singulières pour: 2 Té + 2 Vannes d'isolement + 2 Brides volume tampon sont: {pdc_T_VI_Br:.3f} mCE")
-        st.write(f"PdC singulières totales sont de {pdc_coudes + pdc_T_VI_Br + pdc_fc - pdc_autre:.3f} mCE")
-        st.write(f"PdCe métriques (mCE) sont de {perte_par_metre:.3f} mCE/m")
+        st.write(f"Les PdC singulières totales sont de {pdc_coudes + pdc_T_VI_Br + pdc_fc - pdc_autre:.3f} mCE")
+        st.write(f"Les PdC métriques sont de {perte_par_metre:.3f} mCE/m")
 
         #st.write(f"La longueur possible du tube est: {math.floor(longueur_possible):.0f} mètres")
         st.markdown(f"<div style='border: 3px solid black; font-weight: bold ; padding: 10px;'>La longueur maximale aller-retour de la conduite est de <b> {math.floor(longueur_possible):.0f} mètres </b> </div>", unsafe_allow_html=True)  # Encadrer le résultat
