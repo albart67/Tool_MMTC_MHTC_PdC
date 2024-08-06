@@ -55,7 +55,7 @@ def main():
 
     coudes = st.selectbox("Nombre de coudes à 90° grand angle", [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 
-    dzeta_fc = st.number_input("Saisir la somme des dzettas pour filtre + clapet", min_value=0.0, step=0.1)
+    dzeta_fc = st.number_input("Saisir la somme des dzeta pour filtre + clapet", min_value=0.0, step=0.1)
     
     pdc_autre = st.number_input("Saisir une valeurs de PdC supplémentaire (mCE):", min_value=0.0, step=0.1)
 
