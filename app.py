@@ -46,7 +46,7 @@ def main():
     modèle = st.selectbox("Choisissez un modèle de PAC", data['modèle'])
     
     # Multi-choix pour les diamètres
-    diamètre = st.selectbox("Choisissez un diamètre intérieur de conduit(en mm)", [33, 40, 50, 66, 80])
+    diamètre = st.selectbox("Choisissez un diamètre intérieur de conduit(en mm)", [33, 40, 51, 66, 80])
 
     # Menu déroulant pour choisir le matériau
     matériau = st.selectbox("Choisissez un matériau de conduit", list(rugosites.keys()))
