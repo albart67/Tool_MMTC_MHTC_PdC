@@ -16,6 +16,7 @@ rugosites = {
     'Cuivre': 0.0015,
     'Acier galvanisé': 0.015,
     'Acier inoxydable': 0.002,
+    'Acier 0,1': 0.1,
     #'Fonte': 0.26,
     #'PVC': 0.0015,
     #'PEHD': 0.007
