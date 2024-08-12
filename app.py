@@ -88,7 +88,8 @@ def main():
 
     
     # Constante de viscosité cinématique
-    nu = 0.000000457  # Viscosité cinématique en m²/s
+    #nu = 0.000000457  # Viscosité cinématique en m²/s à 50°
+    nu = 0.000000355  # 80°
     
     # Calculer le nombre de Reynolds
     Re = (v * D) / nu
